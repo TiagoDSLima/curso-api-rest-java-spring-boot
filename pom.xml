@@ -12,20 +12,7 @@
 	<artifactId>curso-api-rest-java-spring-boot</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>curso-api-rest-java-spring-boot</name>
-	<description>Curso de API&apos;s REST em Java</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+
 	<properties>
 		<java.version>21</java.version>
 	</properties>
