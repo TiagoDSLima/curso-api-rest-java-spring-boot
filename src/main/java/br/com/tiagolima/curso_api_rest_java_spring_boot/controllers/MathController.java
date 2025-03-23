@@ -1,6 +1,8 @@
 package br.com.tiagolima.curso_api_rest_java_spring_boot.controllers;
 
 import br.com.tiagolima.curso_api_rest_java_spring_boot.exception.UnsupportedMathOperationException;
+import br.com.tiagolima.curso_api_rest_java_spring_boot.math.SimpleMath;
+import br.com.tiagolima.curso_api_rest_java_spring_boot.request.converters.NumberConverter;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,42 +11,59 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/math")
 public class MathController {
 
-    @RequestMapping("/sum/{nOne}/{nTwo}")
-    public double sum(
-            @PathVariable("nOne") String nOne,
-            @PathVariable("nTwo") String nTwo)
-            {
-        if(!isNumeric(nOne) || !isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");;
-        return convertToDouble(nOne) + convertToDouble(nTwo);
-    }
+    private SimpleMath simpleMath = new SimpleMath();
 
-    @RequestMapping("/subtraction/{nOne}/{nTwo}")
-    public double subtraction(
+    @RequestMapping("/sum/{nOne}/{nTwo}")
+    public Double sum(
             @PathVariable("nOne") String nOne,
             @PathVariable("nTwo") String nTwo)
     {
-        if(!isNumeric(nOne) || !isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");;
-        return convertToDouble(nOne) - convertToDouble(nTwo);
+        if(!NumberConverter.isNumeric(nOne) || !NumberConverter.isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a valid number");
+        return simpleMath.sum(NumberConverter.convertToDouble(nOne), NumberConverter.convertToDouble(nTwo));
     }
 
-    @RequestMapping("/multiplication/{nOne}/{nTwo}")
-    public double multiplication(
+    @RequestMapping("/sub/{nOne}/{nTwo}")
+    public Double sub(
             @PathVariable("nOne") String nOne,
-            @PathVariable("nTwo") String nTwo
-    ){
-        if(!isNumeric(nOne) || !isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a numeric value");;
-        return convertToDouble(nOne) * convertToDouble(nTwo);
+            @PathVariable("nTwo") String nTwo)
+    {
+        if(!NumberConverter.isNumeric(nOne) || !NumberConverter.isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a valid number");
+        return simpleMath.sub(NumberConverter.convertToDouble(nOne), NumberConverter.convertToDouble(nTwo));
     }
 
-    private double convertToDouble(String number) throws UnsupportedMathOperationException {
-        if(number.isEmpty() || number == null) throw new UnsupportedMathOperationException("Please set a numeric value");
-        String nAux = number.replace(",", ".");
-        return Double.parseDouble(nAux);
+    @RequestMapping("/mult/{nOne}/{nTwo}")
+    public Double mult(
+            @PathVariable("nOne") String nOne,
+            @PathVariable("nTwo") String nTwo)
+    {
+        if(!NumberConverter.isNumeric(nOne) || !NumberConverter.isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a valid number");
+        return simpleMath.mult(NumberConverter.convertToDouble(nOne), NumberConverter.convertToDouble(nTwo));
     }
 
-    private boolean isNumeric(String number) {
-        if(number.isEmpty() || number == null) return false;;
-        String nAux = number.replace(",", ".");
-        return nAux.matches("[-+]?[0-9]*\\.?[0-9]+");
+    @RequestMapping("/div/{nOne}/{nTwo}")
+    public Double div(
+            @PathVariable("nOne") String nOne,
+            @PathVariable("nTwo") String nTwo)
+    {
+        if(!NumberConverter.isNumeric(nOne) || !NumberConverter.isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a valid number");
+        return simpleMath.div(NumberConverter.convertToDouble(nOne), NumberConverter.convertToDouble(nTwo));
     }
+
+    @RequestMapping("/media/{nOne}/{nTwo}")
+    public Double media(
+            @PathVariable("nOne") String nOne,
+            @PathVariable("nTwo") String nTwo)
+    {
+        if(!NumberConverter.isNumeric(nOne) || !NumberConverter.isNumeric(nTwo)) throw new UnsupportedMathOperationException("Please set a valid number");
+        return simpleMath.media(NumberConverter.convertToDouble(nOne), NumberConverter.convertToDouble(nTwo));
+    }
+
+    @RequestMapping("/rQ/{number}")
+    public Double rQ(
+            @PathVariable("number") String number)
+    {
+        if(!NumberConverter.isNumeric(number)) throw new UnsupportedMathOperationException("Please set a valid number");
+        return simpleMath.rQ(NumberConverter.convertToDouble(number));
+    }
+
 }
