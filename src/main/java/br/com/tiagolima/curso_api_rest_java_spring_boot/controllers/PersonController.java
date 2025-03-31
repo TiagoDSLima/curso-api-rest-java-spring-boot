@@ -4,10 +4,7 @@ import br.com.tiagolima.curso_api_rest_java_spring_boot.models.PersonModel;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +28,28 @@ public class PersonController {
     )
     public List<PersonModel> findAll() {
         return personService.findAll();
+    }
+
+    @RequestMapping(method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonModel create(@RequestBody PersonModel person) {
+        return personService.createPerson(person);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE
+    )
+    public PersonModel update(@RequestBody PersonModel person) {
+        return personService.updatePerson(person);
+    }
+
+    @RequestMapping(value = "/{id}",
+            method = RequestMethod.DELETE
+    )
+    public void delete(@PathVariable("id") String id) {
+        personService.deletePerson(id);
     }
 }
