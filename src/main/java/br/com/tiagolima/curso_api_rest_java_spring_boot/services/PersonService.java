@@ -1,6 +1,9 @@
 package br.com.tiagolima.curso_api_rest_java_spring_boot.services;
 
 import br.com.tiagolima.curso_api_rest_java_spring_boot.exceptions.ResourceNotFoundException;
+import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.PersonDTO;
+import static br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.ObjectMapper.parseListObjects;
+import static br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.ObjectMapper.parseObject;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.models.PersonModel;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.repositorys.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,23 +22,26 @@ public class PersonService {
     @Autowired
     PersonRepository personRepository;
 
-    public List<PersonModel> findAll(){
+    public List<PersonDTO> findAll(){
         logger.info("Finding all people");
-        return personRepository.findAll();
+        return parseListObjects(personRepository.findAll(), PersonDTO.class);
     }
 
-    public PersonModel findById(Long id){
+    public PersonDTO findById(Long id){
         logger.info("Finding one person");
-        return personRepository.findById(id)
+        var entity = personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this Id"));
+
+        return parseObject(entity, PersonDTO.class);
     }
 
-    public PersonModel createPerson(PersonModel person){
+    public PersonDTO createPerson(PersonDTO person){
         logger.info("Create one person");
-        return personRepository.save(person);
+        var entity = parseObject(person, PersonModel.class);
+        return parseObject(personRepository.save(entity), PersonDTO.class);
     }
 
-    public PersonModel updatePerson(PersonModel person){
+    public PersonDTO updatePerson(PersonDTO person){
         logger.info("Update one person");
         PersonModel entity = personRepository.findById(person.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No records found for this Id"));
@@ -45,7 +51,7 @@ public class PersonService {
         entity.setAddress(person.getAddress());
         entity.setGender(person.getGender());
 
-        return personRepository.save(entity);
+        return parseObject(personRepository.save(entity), PersonDTO.class);
     }
 
     public void deletePerson(Long id) {

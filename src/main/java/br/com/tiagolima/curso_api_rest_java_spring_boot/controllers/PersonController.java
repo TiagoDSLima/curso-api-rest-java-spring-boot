@@ -1,9 +1,10 @@
 package br.com.tiagolima.curso_api_rest_java_spring_boot.controllers;
 
-import br.com.tiagolima.curso_api_rest_java_spring_boot.models.PersonModel;
+import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.PersonDTO;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,41 +16,39 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.GET,
+    @GetMapping(value = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonModel findById(@PathVariable("id") Long id) {
+    public PersonDTO findById(@PathVariable("id") Long id) {
         return personService.findById(id);
     }
 
-    @RequestMapping(method = RequestMethod.GET,
+    @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<PersonModel> findAll() {
+    public List<PersonDTO> findAll() {
         return personService.findAll();
     }
 
-    @RequestMapping(method = RequestMethod.POST,
+    @PostMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonModel create(@RequestBody PersonModel person) {
+    public PersonDTO create(@RequestBody PersonDTO person) {
         return personService.createPerson(person);
     }
 
-    @RequestMapping(method = RequestMethod.PUT,
+    @PutMapping(
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public PersonModel update(@RequestBody PersonModel person) {
+    public PersonDTO update(@RequestBody PersonDTO person) {
         return personService.updatePerson(person);
     }
 
-    @RequestMapping(value = "/{id}",
-            method = RequestMethod.DELETE
-    )
-    public void delete(@PathVariable("id") Long id) {
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> delete(@PathVariable("id") Long id) {
         personService.deletePerson(id);
+        return ResponseEntity.noContent().build();
     }
 }
