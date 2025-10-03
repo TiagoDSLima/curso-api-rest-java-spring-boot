@@ -1,9 +1,10 @@
-package br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto;
+package br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.v2;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Objects;
 
-public class PersonDTO implements Serializable {
+public class PersonDTOV2 implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -11,11 +12,12 @@ public class PersonDTO implements Serializable {
     private Long id;
     private String firstName;
     private String lastName;
+    private LocalDate birthDate;
 
     private String address;
     private String gender;
 
-    public PersonDTO() {
+    public PersonDTOV2() {
     }
 
     public Long getId() {
@@ -58,14 +60,23 @@ public class PersonDTO implements Serializable {
         this.gender = gender;
     }
 
+    public LocalDate getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof PersonDTO personModel)) return false;
-        return Objects.equals(id, personModel.id) && Objects.equals(firstName, personModel.firstName) && Objects.equals(lastName, personModel.lastName) && Objects.equals(address, personModel.address) && Objects.equals(gender, personModel.gender);
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonDTOV2 that = (PersonDTOV2) o;
+        return Objects.equals(id, that.id) && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(birthDate, that.birthDate) && Objects.equals(address, that.address) && Objects.equals(gender, that.gender);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, address, gender);
+        return Objects.hash(id, firstName, lastName, birthDate, address, gender);
     }
 }
