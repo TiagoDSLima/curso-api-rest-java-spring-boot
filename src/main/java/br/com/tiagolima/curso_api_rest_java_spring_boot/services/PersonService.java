@@ -2,7 +2,7 @@ package br.com.tiagolima.curso_api_rest_java_spring_boot.services;
 
 import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.v2.PersonDTOV2;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.exceptions.ResourceNotFoundException;
-import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.v1.PersonDTO;
+import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.PersonDTO;
 import static br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.ObjectMapper.parseListObjects;
 import static br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.ObjectMapper.parseObject;
 
@@ -45,12 +45,6 @@ public class PersonService {
         logger.info("Create one person");
         var entity = parseObject(person, PersonModel.class);
         return parseObject(personRepository.save(entity), PersonDTO.class);
-    }
-
-    public PersonDTOV2 createPersonV2(PersonDTOV2 person){
-        logger.info("Create one person");
-        var entity = personMapper.convertDtoToEntity(person);
-        return personMapper.convertEntityToDto(personRepository.save(entity));
     }
 
     public PersonDTO updatePerson(PersonDTO person){

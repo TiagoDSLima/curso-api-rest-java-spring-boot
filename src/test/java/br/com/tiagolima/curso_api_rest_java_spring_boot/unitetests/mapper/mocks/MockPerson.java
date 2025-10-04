@@ -3,7 +3,7 @@ package br.com.tiagolima.curso_api_rest_java_spring_boot.unitetests.mapper.mocks
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.v1.PersonDTO;
+import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.PersonDTO;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.models.PersonModel;
 
 public class MockPerson {
