@@ -1,12 +1,10 @@
 package br.com.tiagolima.curso_api_rest_java_spring_boot.services;
 
-import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.v2.PersonDTOV2;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.exceptions.ResourceNotFoundException;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.data.dto.PersonDTO;
 import static br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.ObjectMapper.parseListObjects;
 import static br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.ObjectMapper.parseObject;
 
-import br.com.tiagolima.curso_api_rest_java_spring_boot.mapper.custom.PersonMapper;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.models.PersonModel;
 import br.com.tiagolima.curso_api_rest_java_spring_boot.repositorys.PersonRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +22,6 @@ public class PersonService {
 
     @Autowired
     PersonRepository personRepository;
-
-    @Autowired
-    PersonMapper personMapper;
 
     public List<PersonDTO> findAll(){
         logger.info("Finding all people");
